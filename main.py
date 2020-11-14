@@ -1,12 +1,13 @@
-import numpy as np
-import cv2
-from imutils.object_detection import non_max_suppression
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import pytesseract
-from matplotlib import pyplot as plt
 import os
 from PIL import Image
 
 image_path = "img/"
+pytesseract.pytesseract.tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+
 ex_txt = []
 
 def traverse(directory):
@@ -27,10 +28,18 @@ def TxtExtract(directory):
 				ex_txt.extend([[file, "blank"]])
 			else:   
 				ex_txt.extend([[file, text]])
-			break
+				
+			if len(ex_txt) >= 10:
+				break
 				
 	fol_nm = os.path.split(os.path.dirname(subdir))[-1]
 	
 	print(f"Text Extracted from the files in '{fol_nm}' folder & saved to list..")	
 
 TxtExtract(image_path)
+
+ext_df = pd.DataFrame(ex_txt,columns=['FileName','Text'])
+#Inspect the dataframe
+ext_df.head()
+
+print(ex_txt)
