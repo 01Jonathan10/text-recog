@@ -1,7 +1,7 @@
 # import os
 #os.environ['CUDA_VISIBLE_DEVICES'] = '' # hides the GPU from tensorflow (for science)
 # import gzip
-from IPython.display import Image
+import opencv_python
 import tensorflow.keras
 import matplotlib.pyplot as plt
 # import numpy as np
