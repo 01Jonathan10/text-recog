@@ -5,18 +5,20 @@ import imutils
 import argparse
 import time
 import cv2
+from text_detect import TextDetector
 
 (winW, winH) = (40, 40)
 
-def find_text(image):
+def find_text(image, text_detector):
 	for resized in pyramid(image, scale=1.5):
 		for (x, y, window) in sliding_window(resized, stepSize=20, windowSize=(winW, winH)):
 			if window.shape[0] != winH or window.shape[1] != winW:
 				continue
 			clone = resized.copy()
-			cv2.rectangle(clone, (x, y), (x + winW, y + winH), (0, 255, 0), 2)
-			cv2.imshow("Window", clone)
-			cv2.waitKey(1)
+			region = resized[y:y+winW, x:x+winW]
+			data = TextDetector.extract_from_image(region)
+			
+			result = text_detector.predict(data)[0]
 
 def pyramid(image, scale=1.5, minSize=(30, 30)):
 	yield image
