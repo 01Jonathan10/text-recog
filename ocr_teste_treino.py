@@ -7,6 +7,7 @@ import numpy as np
 import random
 import struct
 import time
+
 #para baixar
 #List computing devices available to tensorflow:
 from tensorflow.python.client import device_lib
