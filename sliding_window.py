@@ -10,17 +10,20 @@ from text_detect import TextDetector
 (winW, winH) = (40, 40)
 
 def find_text(image, text_detector):
-	for resized in pyramid(image, scale=1.5):
-		for (x, y, window) in sliding_window(resized, stepSize=20, windowSize=(winW, winH)):
-			if window.shape[0] != winH or window.shape[1] != winW:
-				continue
-			clone = resized.copy()
-			region = resized[y:y+winW, x:x+winW]
-			data = TextDetector.extract_from_image(region)
-			
-			result = text_detector.predict(data)[0]
+	result = []
+	for (x, y, window) in sliding_window(image, stepSize=20, windowSize=(winW, winH)):
+		if window.shape[0] != winH or window.shape[1] != winW:
+			continue
+		data = TextDetector.extract_from_image(window)
+		has_text = text_detector.predict(data)
+		
+		if has_text:
+			result.append(([x, y], 1))
+		
+	
+	return result
 
-def pyramid(image, scale=1.5, minSize=(30, 30)):
+def pyramid(image, scale=1.5, minSize=(300, 300)):
 	yield image
 	while True:
 		w = int(image.shape[1] / scale)
