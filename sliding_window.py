@@ -11,14 +11,15 @@ from text_detect import TextDetector
 
 def find_text(image, text_detector):
 	result = []
-	for (x, y, window) in sliding_window(image, stepSize=20, windowSize=(winW, winH)):
-		if window.shape[0] != winH or window.shape[1] != winW:
-			continue
-		data = TextDetector.extract_from_image(window)
-		has_text = text_detector.predict(data)
-		
-		if has_text:
-			result.append(([x, y], 1))
+	for resized in pyramid(image):
+		for (x, y, window) in sliding_window(resized, stepSize=20, windowSize=(winW, winH)):
+			if window.shape[0] != winH or window.shape[1] != winW:
+				continue
+			data = TextDetector.extract_from_image(window)
+			has_text = text_detector.predict(data)
+			
+			if has_text:
+				result.append(([x, y], 1))
 		
 	
 	return result

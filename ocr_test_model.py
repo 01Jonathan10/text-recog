@@ -1,15 +1,14 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 import tensorflow.keras
 import matplotlib.pyplot as plt
 import cv2
+import numpy as np
 
-model_path = 'folder/modelo';
-a1 = 'folder/aprint.png';
-a2 = 'folder/awpp.jpeg';
+model_path = 'folder/modelo'
+test_path = 'folder/aprint.png'
 
 model = tensorflow.keras.models.load_model(model_path)
-print(model.layers)
-# results_new = model_new.evaluate(test_X, test_y)
-# print('Loss: %.2f%%, Accuracy: %.2f%%' % (results_new[0]*100, results_new[1]*100))
 
 # #ploting o modelo
 # plt.figure(figsize=(12, 6), dpi=96)
@@ -30,16 +29,13 @@ print(model.layers)
 # plt.tight_layout()
 # plt.show()
 
-test_image = cv2.imread(a1)
+test_image = cv2.imread(test_path)
 test_image = cv2.cvtColor(test_image,cv2.COLOR_BGR2GRAY)
-test_image = cv2.resize(test_image,(28,28))
+test_image = cv2.resize(test_image,(28,28)).astype('float32')
 test_image = test_image / 255
-test_image = test_image.reshape((-1,) + test_image.shape)
+test_image = test_image.reshape(test_image.shape + (1,))
 
-print(test_image.dtype)
-print(test_image.shape)
-
-y_pred = model.predict_classes(test_image)
-print(y_pred)
-classname = y_pred[0]
-print("Class: ",classname)
+y_pred = model.predict(np.array([test_image]))
+predictions = y_pred[0]
+result = np.argmax(predictions)
+print("Class: ",result)
