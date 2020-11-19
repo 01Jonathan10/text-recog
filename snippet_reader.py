@@ -9,6 +9,7 @@ import cv2
 import tensorflow.keras
 import cv2
 import numpy as np
+import time
 from sliding_window import sliding_window
 
 (winW, winH) = (28, 28)
@@ -19,14 +20,22 @@ def find_text(image):
 	result = []
 	model = tensorflow.keras.models.load_model('test/modelo')
 	image = imutils.resize(image, height=28)
-	for (x, y, window) in sliding_window(image, stepSize=10, windowSize=(winW, winH)):
+	for (x, y, window) in sliding_window(image, stepSize=5, windowSize=(winW, winH)):
 		if window.shape[0] != winH or window.shape[1] != winW:
 			continue
 		data = get_grayscale_sector(window)
 		predictions = model.predict(np.array([data]))[0]
-		result = np.argmax(predictions) if np.max(predictions) > 0.5 else None
-		print("Class: ",result)
+		guess = np.argmax(predictions) if np.max(predictions) > 0.3 else None
 		
+		print(f'Class: {guess or "-"}')
+		
+		clone = image.copy()
+		cv2.rectangle(clone, (x, y), (x + winW, y + winH), (0, 255, 0), 2)
+		cv2.imshow("Window", clone)
+		cv2.waitKey(1)
+		time.sleep(0.025)
+		
+		result.append(guess)
 	
 	return result
 			
