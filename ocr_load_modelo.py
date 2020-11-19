@@ -32,8 +32,9 @@ print(model.layers)
 
 test_image = cv2.imread(a1)
 test_image = cv2.cvtColor(test_image,cv2.COLOR_BGR2GRAY)
+test_image = cv2.resize(test_image,(28,28))
 test_image = test_image / 255
-test_image  = test_image.reshape((-1,) + test_image.shape)
+test_image = test_image.reshape((-1,) + test_image.shape)
 
 print(test_image.dtype)
 print(test_image.shape)
