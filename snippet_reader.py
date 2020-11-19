@@ -18,7 +18,7 @@ snippet_path = "mnist/snippets/a.png"
 def find_text(image):
 	result = []
 	model = tensorflow.keras.models.load_model('test/modelo')
-	image = imutils.resize(image, heigth=28)
+	image = imutils.resize(image, height=28)
 	for (x, y, window) in sliding_window(image, stepSize=10, windowSize=(winW, winH)):
 		if window.shape[0] != winH or window.shape[1] != winW:
 			continue
