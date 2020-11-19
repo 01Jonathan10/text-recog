@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import imutils
-import argparse
-import time
 import cv2
 from text_detect import TextDetector
 
