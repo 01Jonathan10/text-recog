@@ -20,7 +20,7 @@ labels = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 categories = len(labels)
 batch_size = 1024
 epochs = 50
-model_path = 'folder/modelo'
+model_path = 'test/modelo'
 
 #codigo copiado p/ abrir os index do emnist
 def read_idx(filename):

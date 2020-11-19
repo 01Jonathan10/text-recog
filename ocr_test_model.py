@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import cv2
 import numpy as np
 
-model_path = 'folder/modelo'
-test_path = 'folder/aprint.png'
+model_path = 'test/modelo'
+test_path = 'test/aprint.png'
 
 model = tensorflow.keras.models.load_model(model_path)
 
