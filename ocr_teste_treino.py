@@ -15,7 +15,7 @@ device_list = device_lib.list_local_devices()
 # [x.name for x in device_list]
 # %matplotlib inline
 random.seed(12345)
-image_dir = '/home/seaquest/Arthur/ic/text-recog/emnist/gzip'
+image_dir = 'mnist'
 labels = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 categories = len(labels)
 batch_size = 1024
@@ -24,8 +24,8 @@ model_path = '/home/seaquest/Arthur/ic/text-recog/folder/modelo'
 
 #codigo copiado p/ abrir os index do emnist
 def read_idx(filename):
-    print('Processing data from %s.' % filename)
-    with gzip.open(filename, 'rb') as f:
+	print('Processing data from %s.' % filename)
+	with gzip.open(filename, 'rb') as f:
 		z, dtype, dim = struct.unpack('>HBB', f.read(4))
 		print('Dimensions:', dim)
 		shape = tuple(struct.unpack('>I', f.read(4))[0] for d in range(dim))
@@ -34,16 +34,16 @@ def read_idx(filename):
 
 #codigo copiado p/ carregar o emnist
 def load_emnist():
-    train_images = os.path.join(image_dir, 'emnist-byclass-train-images-idx3-ubyte.gz')
-    train_labels = os.path.join(image_dir, 'emnist-byclass-train-labels-idx1-ubyte.gz')
-    test_images = os.path.join(image_dir, 'emnist-byclass-test-images-idx3-ubyte.gz')
-    test_labels = os.path.join(image_dir, 'emnist-byclass-test-labels-idx1-ubyte.gz')
+	train_images = os.path.join(image_dir, 'emnist-byclass-train-images-idx3-ubyte.gz')
+	train_labels = os.path.join(image_dir, 'emnist-byclass-train-labels-idx1-ubyte.gz')
+	test_images = os.path.join(image_dir, 'emnist-byclass-test-images-idx3-ubyte.gz')
+	test_labels = os.path.join(image_dir, 'emnist-byclass-test-labels-idx1-ubyte.gz')
 
-    train_X = read_idx(train_images)
-    train_y = read_idx(train_labels)
-    test_X = read_idx(test_images)
-    test_y = read_idx(test_labels)
-    return (train_X, train_y, test_X, test_y)
+	train_X = read_idx(train_images)
+	train_y = read_idx(train_labels)
+	test_X = read_idx(test_images)
+	test_y = read_idx(test_labels)
+	return (train_X, train_y, test_X, test_y)
 
 raw_train_X, raw_train_y, raw_test_X, raw_test_y = load_emnist()
 
@@ -75,14 +75,14 @@ test_y = tensorflow.keras.utils.to_categorical(raw_test_y)
 model = tensorflow.keras.models.Sequential()
 
 model.add(tensorflow.keras.layers.Conv2D(32,
-                kernel_size=(5, 5),
-                strides=(2, 2),
-                input_shape=(28, 28, 1),
-                activation='relu'))
+			 kernel_size=(5, 5),
+			 strides=(2, 2),
+			 input_shape=(28, 28, 1),
+			 activation='relu'))
 
 model.add(tensorflow.keras.layers.Conv2D(64,
-                kernel_size=(3, 3),
-                activation='relu'))
+			 kernel_size=(3, 3),
+			 activation='relu'))
 
 model.add(tensorflow.keras.layers.MaxPooling2D(pool_size=(2, 2)))
 

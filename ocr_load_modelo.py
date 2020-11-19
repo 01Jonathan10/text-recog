@@ -1,17 +1,10 @@
-# import os
-#os.environ['CUDA_VISIBLE_DEVICES'] = '' # hides the GPU from tensorflow (for science)
-# import gzip
-import opencv_python
 import tensorflow.keras
 import matplotlib.pyplot as plt
-# import numpy as np
-# import random
-# import struct
-# import time
+import cv2
 
-model_path = '/home/seaquest/Arthur/ic/text-recog/folder/modelo';
-a1 = '/home/seaquest/Arthur/ic/text-recog/folder/aprint.png';
-a2 = '/home/seaquest/Arthur/ic/text-recog/folder/awpp.jpeg';
+model_path = 'folder/modelo';
+a1 = 'folder/aprint.png';
+a2 = 'folder/awpp.jpeg';
 
 model = tensorflow.keras.models.load_model(model_path)
 print(model.layers)
@@ -37,13 +30,8 @@ print(model.layers)
 # plt.tight_layout()
 # plt.show()
 
-
-test_image = image.load_img(a1,color_mode="grayscale",target_size=(28,28,1))
-print(test_image.format)
-print(test_image.mode)
-print(test_image.size)
-
-test_image = image.img_to_array(test_image)
+test_image = cv2.imread(a1)
+test_image = cv2.cvtColor(test_image,cv2.COLOR_BGR2GRAY)
 test_image = test_image / 255
 test_image  = test_image.reshape((-1,) + test_image.shape)
 
