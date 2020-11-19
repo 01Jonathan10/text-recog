@@ -27,6 +27,6 @@ def main():
 			
 			break
 					
-	print(f"Text Extracted from the files in '{image_path}' folder & saved to list..")	
+	print ("Text Extracted from the files in '{image_path}' folder & saved to list..")	
 
 main()
