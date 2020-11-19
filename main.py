@@ -39,9 +39,7 @@ def main():
 			cv2.waitKey(0)
 			
 			break
-					
-	print(f"Text Extracted from the files in '{image_path}' folder & saved to list..")	
-	
+						
 
 def show_contours(im):
 	im = np.copy(im)
