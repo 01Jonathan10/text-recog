@@ -28,4 +28,4 @@ Instalar o PIP p/ manter atualizado e conseguir pegar as mesmas blibiotecas.
 -Remova o arquivo get-pip.py após instalar o pip.
 `rm get-pip.py`
 
-Pandas : `pip install pandas`
+Pandas : `pip install -r requirements.txt`
