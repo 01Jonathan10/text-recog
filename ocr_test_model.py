@@ -48,6 +48,7 @@ else:
 # plt.legend(['train', 'test'], loc='upper left')
 # plt.tight_layout()
 # plt.show()
+
 labels = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
 test_image = cv2.imread(test_path)
