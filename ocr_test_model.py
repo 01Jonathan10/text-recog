@@ -1,6 +1,7 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-import tensorflow.keras
+import tensorflow.keras 
+import tensorflow.keras as keras
 import matplotlib.pyplot as plt
 import cv2
 import numpy as np
@@ -29,6 +30,9 @@ model = tensorflow.keras.models.load_model(model_path)
 # plt.legend(['train', 'test'], loc='upper left')
 # plt.tight_layout()
 # plt.show()
+labels = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+
+
 
 test_image = cv2.imread(test_path)
 test_image = cv2.cvtColor(test_image,cv2.COLOR_BGR2GRAY)
@@ -41,4 +45,20 @@ predictions = y_pred[0]
 result = np.argmax(predictions)
 print("Class: ",result)
 print(model.summary())
+
+
+testtt = test_path
+
+img = keras.preprocessing.image.load_img(
+    testtt, target_size=(28, 28)
+)       # 107 98 target_size=(img_height, img_width)
+img_array = keras.preprocessing.image.img_to_array(img)
+img_array = tensorflow.expand_dims(img_array, 0) # Create a batch
+print ( img_array.shape )
+# predictions = model.predict(img_array)
+# score = tensorflow.nn.softmax(predictions[0])
+# print(
+#     "This image most likely belongs to {} with a {:.2f} percent confidence."
+#     .format(labels[np.argmax(score)], 100 * np.max(score))
+# )
 
