@@ -4,9 +4,10 @@ import tensorflow.keras
 import matplotlib.pyplot as plt
 import cv2
 import numpy as np
+from PIL import Image
 
 model_path = 'test/modelo'
-test_path = 'test/aprint.png'
+test_path = 'test/modelprint.png'
 
 model = tensorflow.keras.models.load_model(model_path)
 
@@ -39,3 +40,5 @@ y_pred = model.predict(np.array([test_image]))
 predictions = y_pred[0]
 result = np.argmax(predictions)
 print("Class: ",result)
+print(model.summary())
+
