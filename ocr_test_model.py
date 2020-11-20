@@ -50,15 +50,15 @@ print(model.summary())
 testtt = test_path
 
 img = keras.preprocessing.image.load_img(
-    testtt, target_size=(28, 28)
+    testtt, target_size=(28, 28) ,color_mode="grayscale"
 )       # 107 98 target_size=(img_height, img_width)
 img_array = keras.preprocessing.image.img_to_array(img)
 img_array = tensorflow.expand_dims(img_array, 0) # Create a batch
 print ( img_array.shape )
-# predictions = model.predict(img_array)
-# score = tensorflow.nn.softmax(predictions[0])
-# print(
-#     "This image most likely belongs to {} with a {:.2f} percent confidence."
-#     .format(labels[np.argmax(score)], 100 * np.max(score))
-# )
+predictions = model.predict(img_array)
+score = tensorflow.nn.softmax(predictions[0])
+print(
+    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    .format(labels[np.argmax(score)], 100 * np.max(score))
+)
 
