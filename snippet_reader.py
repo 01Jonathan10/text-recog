@@ -17,26 +17,27 @@ from sliding_window import sliding_window
 snippet_path = "mnist/snippets/a.png"
 
 def find_text(image):
-	result = []
+	result = ''
 	model = tensorflow.keras.models.load_model('test/modelo')
 	image = imutils.resize(image, height=28)
+	labels = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 	for (x, y, window) in sliding_window(image, stepSize=5, windowSize=(winW, winH)):
 		if window.shape[0] != winH or window.shape[1] != winW:
 			continue
 		data = get_grayscale_sector(window)
 		predictions = model.predict(np.array([data]))[0]
 		guess = np.argmax(predictions) if np.max(predictions) > 0.3 else None
-		
-		print(f'Class: {guess or "-"}')
-		
+		letter = labels[guess] if guess else "-"
+				
 		clone = image.copy()
 		cv2.rectangle(clone, (x, y), (x + winW, y + winH), (0, 255, 0), 2)
 		cv2.imshow("Window", clone)
 		cv2.waitKey(1)
 		time.sleep(0.025)
 		
-		result.append(guess)
-	
+		result = result + letter
+		
+	print (result)
 	return result
 			
 def get_grayscale_sector(image):
