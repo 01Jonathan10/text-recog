@@ -6,17 +6,36 @@ import matplotlib.pyplot as plt
 import cv2
 import numpy as np
 from PIL import Image
+import PIL.ImageOps
 
 model_path = 'test/modelo'
-test_path = 'test/modelprint.png'
-
+test_path = 'test/aprint.png'
+test_path2 = 'new_file.png'
 model = tensorflow.keras.models.load_model(model_path)
+
+
+image = Image.open(test_path)
+if image.mode == 'RGBA':
+    r,g,b,a = image.split()
+    rgb_image = Image.merge('RGB', (r,g,b))
+
+    inverted_image = PIL.ImageOps.invert(rgb_image)
+
+    r2,g2,b2 = inverted_image.split()
+
+    final_transparent_image = Image.merge('RGBA', (r2,g2,b2,a))
+
+    final_transparent_image.save('new_file.png')
+
+else:
+    inverted_image = PIL.ImageOps.invert(image)
+    inverted_image.save('new_name.png')
 
 # #ploting o modelo
 # plt.figure(figsize=(12, 6), dpi=96)
 # plt.subplot(1, 2, 1)
 # plt.plot(fit.history['loss'])
-# plt.plot(fit.history['val_loss'])
+# plt.plot(fit.history['val_loss']) 
 # plt.title('Model Loss')
 # plt.xlabel('Epoch')
 # plt.ylabel('Loss')
@@ -32,8 +51,6 @@ model = tensorflow.keras.models.load_model(model_path)
 # plt.show()
 labels = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
-
-
 test_image = cv2.imread(test_path)
 test_image = cv2.cvtColor(test_image,cv2.COLOR_BGR2GRAY)
 test_image = cv2.resize(test_image,(28,28)).astype('float32')
@@ -46,19 +63,18 @@ result = np.argmax(predictions)
 print("Class: ",result)
 print(model.summary())
 
-
-testtt = test_path
+testtt = test_path2
 
 img = keras.preprocessing.image.load_img(
-    testtt, target_size=(28, 28)
+    testtt, target_size=(28, 28) ,color_mode="grayscale"
 )       # 107 98 target_size=(img_height, img_width)
 img_array = keras.preprocessing.image.img_to_array(img)
 img_array = tensorflow.expand_dims(img_array, 0) # Create a batch
-print ( img_array.shape )
-# predictions = model.predict(img_array)
-# score = tensorflow.nn.softmax(predictions[0])
-# print(
-#     "This image most likely belongs to {} with a {:.2f} percent confidence."
-#     .format(labels[np.argmax(score)], 100 * np.max(score))
-# )
+print ( img_array )
+predictions = model.predict(img_array)
+score = tensorflow.nn.softmax(predictions[0])
+print(
+    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    .format(labels[np.argmax(score)], 100 * np.max(score))
+)
 
