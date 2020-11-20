@@ -13,7 +13,6 @@ test_path = 'test/aprint.png'
 test_path2 = 'new_file.png'
 model = tensorflow.keras.models.load_model(model_path)
 
-
 image = Image.open(test_path)
 if image.mode == 'RGBA':
     r,g,b,a = image.split()
@@ -77,4 +76,3 @@ print(
     "This image most likely belongs to {} with a {:.2f} percent confidence."
     .format(labels[np.argmax(score)], 100 * np.max(score))
 )
-
