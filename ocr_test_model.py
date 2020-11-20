@@ -12,25 +12,26 @@ model_path = 'test/modelo'
 test_path = 'test/p.png'
 # test_path = 'test/modelprint.png'
 # test_path = 'test/aprint.png'
-test_path2 = 'new_file.png'
+
+# test_path2 = 'new_file.png'
 model = tensorflow.keras.models.load_model(model_path)
 
-image = Image.open(test_path)
-if image.mode == 'RGBA':
-    r,g,b,a = image.split()
-    rgb_image = Image.merge('RGB', (r,g,b))
+# image = Image.open(test_path)
+# if image.mode == 'RGBA':
+#     r,g,b,a = image.split()
+#     rgb_image = Image.merge('RGB', (r,g,b))
 
-    inverted_image = PIL.ImageOps.invert(rgb_image)
+#     inverted_image = PIL.ImageOps.invert(rgb_image)
 
-    r2,g2,b2 = inverted_image.split()
+#     r2,g2,b2 = inverted_image.split()
 
-    final_transparent_image = Image.merge('RGBA', (r2,g2,b2,a))
+#     final_transparent_image = Image.merge('RGBA', (r2,g2,b2,a))
 
-    final_transparent_image.save('new_file.png')
+#     final_transparent_image.save('new_file.png')
 
-else:
-    inverted_image = PIL.ImageOps.invert(image)
-    inverted_image.save('new_name.png')
+# else:
+#     inverted_image = PIL.ImageOps.invert(image)
+#     inverted_image.save('new_name.png')
 
 # #ploting o modelo
 # plt.figure(figsize=(12, 6), dpi=96)

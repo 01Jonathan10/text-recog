@@ -34,14 +34,14 @@ def read_idx(filename):
 
 #codigo copiado p/ carregar o emnist
 def load_emnist():
-	train_images = os.path.join(image_dir, 'emnist-byclass-train-images-idx3-ubyte.gz')
-	train_labels = os.path.join(image_dir, 'emnist-byclass-train-labels-idx1-ubyte.gz')
-	test_images = os.path.join(image_dir, 'emnist-byclass-test-images-idx3-ubyte.gz')
-	test_labels = os.path.join(image_dir, 'emnist-byclass-test-labels-idx1-ubyte.gz')
+	train_images = os.path.join(image_dir, 'emnist-mnist-train-images-idx3-ubyte.gz')
+	train_labels = os.path.join(image_dir, 'emnist-mnist-train-labels-idx1-ubyte.gz')
+	test_images = os.path.join(image_dir, 'emnist-mnist-test-images-idx3-ubyte.gz')
+	test_labels = os.path.join(image_dir, 'emnist-mnist-test-labels-idx1-ubyte.gz')
 
 	train_X = read_idx(train_images)
 	train_y = read_idx(train_labels)
-	test_X = read_idx(test_images)
+	test_X = read_idx(test_images)	
 	test_y = read_idx(test_labels)
 	return (train_X, train_y, test_X, test_y)
 
@@ -50,7 +50,7 @@ raw_train_X, raw_train_y, raw_test_X, raw_test_y = load_emnist()
 #avaliando data set
 print("shapes",raw_train_X.shape, raw_train_y.shape, raw_test_X.shape, raw_test_y.shape)
 
-# mostrando imagem que temos no dataset
+# #mostrando imagem que temos no dataset
 # i = random.randint(0, raw_train_X.shape[0])
 # fig, ax = plt.subplots()
 # ax.clear()
@@ -69,7 +69,6 @@ test_X = test_X.reshape(test_X.shape[0], 28, 28, 1)
 
 train_y = tensorflow.keras.utils.to_categorical(raw_train_y)
 test_y = tensorflow.keras.utils.to_categorical(raw_test_y)
-
 # import tensorflow
 #MONTANDO A REDE CONVOLUCIONAL
 model = tensorflow.keras.models.Sequential()
