@@ -4,6 +4,7 @@
 import imutils
 import cv2
 from text_detect import TextDetector
+import time
 
 (winW, winH) = (40, 40)
 
@@ -15,6 +16,12 @@ def find_text(image, text_detector):
 				continue
 			data = TextDetector.extract_from_image(window)
 			has_text = text_detector.predict(data)
+			
+			clone = resized.copy()
+			cv2.rectangle(clone, (x, y), (x + winW, y + winH), (0, 255, 0), 2)
+			cv2.imshow("Window", clone)
+			cv2.waitKey(1)
+			time.sleep(0.01)
 			
 			if has_text:
 				result.append(([x, y], 1))
