@@ -29,36 +29,89 @@ def find_text(image):
 		img = Image.fromarray(window)
 		img.save('teste.png')
 		letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+		letter2= letter
+		letter = letter.rstrip("\n")
 		window2 = window
-		while len(letter) > 1 and a > 10:
-			a=a-1
-			img = Image.fromarray(window2[:,0:a])
-			img.save('teste.png')
-			letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
-		# if len(letter) == 1:
-		# 	result = result + letter
-		# else:
-		# 	a=27
-		# 	while len(letter) > 1 and a > 15:
-		# 		a=a-1
-		# 		img = Image.fromarray(window2[:,27-a:27])
-		# 		img.save('teste.png')
-		# 		letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
-		# 	if len(letter) == 1:
-		# 		result = result + letter
-		# 	else:
-		# 		a=27
-		# 		while len(letter) > 1 and a > 5:
-		# 			a=a-1
-		# 			img = Image.fromarray(window2[:,27-a:a])
-		# 			img.save('teste.png')
-		# 			letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
-		# 			if len(letter) == 1:
-		# 				result = result + letter
-		result = result + letter
+		threshould= 22
+		threshoulddiff= 6
+		if len(letter) > 3:
+			a=27
+			while len(letter) > 3 and a > threshould:
+				a=a-1
+				img = Image.fromarray(window2[:,0:a])
+				img.save('teste.png')
+				letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+				letter3 = letter.rstrip("\n")
+				# print ( a )
+				# print( len(letter) )
+				# print( letter3[0:len(letter)-2] )
+				# print( letter2 )
+		if len(letter) > 3:
+			a=27
+			while len(letter) > 3 and a > threshould:
+				a=a-1
+				img = Image.fromarray(window2[:,27-a:27])
+				img.save('teste.png')
+				letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+				letter3 = letter.rstrip("\n")
+				# print ( a )
+				# print( len(letter) )
+				# print( letter3[0:len(letter)-2] )
+				# print( letter2 )
+		if len(letter) > 3:
+			a=27
+			while len(letter) > 3 and a > threshould:
+				a=a-1
+				img = Image.fromarray(window2[:,27-a:a])
+				img.save('teste.png')
+				letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+				letter3 = letter.rstrip("\n")
+				# print ( a )
+				# print( len(letter) )
+				# print( letter3[0:len(letter)-2] )
+				# print( letter2 )
+
+		if len(letter) > 3:
+			a=27
+			while len(letter) > 3 and a > threshould - threshoulddiff:
+				a=a-2
+				img = Image.fromarray(window2[:,0:a])
+				img.save('teste.png')
+				letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+				letter3 = letter.rstrip("\n")
+				# print ( a )
+				# print( len(letter) )
+				# print( letter3[0:len(letter)-2] )
+				# print( letter2 )
+		if len(letter) > 3:
+			a=27
+			while len(letter) > 3 and a > threshould - threshoulddiff:
+				a=a-2
+				img = Image.fromarray(window2[:,27-a:27])
+				img.save('teste.png')
+				letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+				letter3 = letter.rstrip("\n")
+				# print ( a )
+				# print( len(letter) )
+				# print( letter3[0:len(letter)-2] )
+				# print( letter2 )
+		if len(letter) > 3:
+			a=27
+			while len(letter) > 3 and a > threshould - threshoulddiff:
+				a=a-2
+				img = Image.fromarray(window2[:,27-a:a])
+				img.save('teste.png')
+				letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+				letter3 = letter.rstrip("\n")
+				# print ( a )
+				# print( len(letter) )
+				# print( letter3[0:len(letter)-2] )
+				# print( letter2 )
+		if len(letter) == 3 :
+			result = result + letter3[0:len(letter)-2]
 			# print ( a )
 			# print( letter )
-
+	print( "threshould: " + str(threshould) + " threshoulddiff: " + str(threshoulddiff) )
 	print (result)
 	return result
 
