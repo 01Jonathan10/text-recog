@@ -3,3 +3,4 @@ img/*
 env/
 __pycache__/
 mnist/
+gzip/

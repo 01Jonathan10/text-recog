@@ -33,26 +33,6 @@ model = tensorflow.keras.models.load_model(model_path)
 #     inverted_image = PIL.ImageOps.invert(image)
 #     inverted_image.save('new_name.png')
 
-# #ploting o modelo
-# plt.figure(figsize=(12, 6), dpi=96)
-# plt.subplot(1, 2, 1)
-# plt.plot(fit.history['loss'])
-# plt.plot(fit.history['val_loss']) 
-# plt.title('Model Loss')
-# plt.xlabel('Epoch')
-# plt.ylabel('Loss')
-# plt.legend(['train', 'test'], loc='upper left')
-# plt.subplot(1, 2, 2)
-# plt.plot(fit.history['accuracy'])
-# plt.plot(fit.history['val_accuracy'])
-# plt.title('Model Accuracy')
-# plt.xlabel('Epoch')
-# plt.ylabel('Accuracy')
-# plt.legend(['train', 'test'], loc='upper left')
-# plt.tight_layout()
-# plt.show()
-
-
 labels = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
 test_image = cv2.imread(test_path)
