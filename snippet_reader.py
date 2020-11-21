@@ -30,7 +30,7 @@ def find_text(image):
 		img.save('teste.png')
 		letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
 		window2 = window
-		while len(letter) > 1 and a > 5:
+		while len(letter) > 1 and a > 10:
 			a=a-1
 			img = Image.fromarray(window2[:,0:a])
 			img.save('teste.png')
@@ -76,7 +76,7 @@ def find_text_list_append(image):
 		letter.append( pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10'))
 		window2 = window
 
-		while len(letter) > 1 and a > 5:
+		while len(letter) > 1 and a > 20:
 			a=a-1
 			img = Image.fromarray(window2[:,0:a])
 			img.save('teste.png')
