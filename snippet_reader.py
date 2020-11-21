@@ -20,16 +20,84 @@ snippet_path = "mnist/snippets/a.png"
 
 def find_text(image):
 	result = ''
+	
+	image = imutils.resize(image, height=28)
+	for (x, y, window) in sliding_window(image, stepSize=10, windowSize=(winW, winH)):
+		if window.shape[0] != winH or window.shape[1] != winW:
+			continue
+		a=27
+		img = Image.fromarray(window)
+		img.save('teste.png')
+		letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+		window2 = window
+		while len(letter) > 1 and a > 5:
+			a=a-1
+			img = Image.fromarray(window2[:,0:a])
+			img.save('teste.png')
+			letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+		# if len(letter) == 1:
+		# 	result = result + letter
+		# else:
+		# 	a=27
+		# 	while len(letter) > 1 and a > 15:
+		# 		a=a-1
+		# 		img = Image.fromarray(window2[:,27-a:27])
+		# 		img.save('teste.png')
+		# 		letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+		# 	if len(letter) == 1:
+		# 		result = result + letter
+		# 	else:
+		# 		a=27
+		# 		while len(letter) > 1 and a > 5:
+		# 			a=a-1
+		# 			img = Image.fromarray(window2[:,27-a:a])
+		# 			img.save('teste.png')
+		# 			letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+		# 			if len(letter) == 1:
+		# 				result = result + letter
+		result = result + letter
+			# print ( a )
+			# print( letter )
+
+	print (result)
+	return result
+
+
+def find_text_list_append(image):
+	result = list()	
 	image = imutils.resize(image, height=28)
 	for (x, y, window) in sliding_window(image, stepSize=5, windowSize=(winW, winH)):
 		if window.shape[0] != winH or window.shape[1] != winW:
 			continue
+		a=27
+		letter = list()
 		img = Image.fromarray(window)
 		img.save('teste.png')
-		letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10') 
-		
-		result = result + letter
-		
+		letter.append( pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10'))
+		window2 = window
+
+		while len(letter) > 1 and a > 5:
+			a=a-1
+			img = Image.fromarray(window2[:,0:a])
+			img.save('teste.png')
+			letter.append( pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10'))
+
+		a=27
+		while len(letter) > 1 and a > 15:
+			a=a-1
+			img = Image.fromarray(window2[:,27-a:27])
+			img.save('teste.png')
+			letter.append( pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10'))
+		a=27
+		while len(letter) > 1 and a > 5:
+			a=a-1
+			img = Image.fromarray(window2[:,27-a:a])
+			img.save('teste.png')
+			letter.append( pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10'))
+		print(letter)
+		result.append(letter)	
+
+
 	print (result)
 	return result
 
