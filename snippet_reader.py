@@ -11,12 +11,29 @@ import cv2
 import numpy as np
 import time
 from sliding_window import sliding_window
+import pytesseract
+from PIL import Image
 
 (winW, winH) = (28, 28)
 
 snippet_path = "mnist/snippets/a.png"
 
 def find_text(image):
+	result = ''
+	image = imutils.resize(image, height=28)
+	for (x, y, window) in sliding_window(image, stepSize=5, windowSize=(winW, winH)):
+		if window.shape[0] != winH or window.shape[1] != winW:
+			continue
+		img = Image.fromarray(window)
+		img.save('teste.png')
+		letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10') 
+		
+		result = result + letter
+		
+	print (result)
+	return result
+
+def find_text2(image):
 	result = ''
 	model = tensorflow.keras.models.load_model('test/modelo')
 	image = imutils.resize(image, height=28)
@@ -39,7 +56,7 @@ def find_text(image):
 		
 	print (result)
 	return result
-			
+
 def get_grayscale_sector(image):
 	sector = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY).astype('float32')
 	sector = sector / 255
