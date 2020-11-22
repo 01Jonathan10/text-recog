@@ -18,6 +18,40 @@ from PIL import Image
 
 snippet_path = "mnist/snippets/a.png"
 
+def find_best(image):
+	result = ''
+	
+	image = imutils.resize(image, height=28)
+	for (x, y, window) in sliding_window(image, stepSize=10, windowSize=(winW, winH)):
+		if window.shape[0] != winH or window.shape[1] != winW:
+			continue
+		a=27
+		img = Image.fromarray(window)
+		img.save('teste.png')
+		letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+		window2 = window
+		if len(letter) > 3:
+			a=27
+			while len(letter) > 3 and a > 15:
+				a=a-1
+				img = Image.fromarray(window2[:,0:a])
+				img.save('teste.png')
+				letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+		if len(letter) > 3:
+			a=27
+			while len(letter) > 1 and a > 15:
+				a=a-1
+				img = Image.fromarray(window2[:,27-a:27])
+				img.save('teste.png')
+				letter = pytesseract.image_to_string(Image.open("teste.png"),config='--psm 10')
+		result = result + letter[0:len(letter)-2]
+			# print ( a )
+			# print( letter )
+	# print( "threshould: " + str(threshould) )
+	print (result)
+	return result
+
+
 def find_text(image):
 	result = ''
 	
@@ -33,7 +67,7 @@ def find_text(image):
 		letter = letter.rstrip("\n")
 		window2 = window
 		threshould= 22
-		threshoulddiff= 6
+		threshoulddiff= 22
 		if len(letter) > 3:
 			a=27
 			while len(letter) > 3 and a > threshould:
